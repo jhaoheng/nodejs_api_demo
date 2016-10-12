@@ -23,6 +23,7 @@ var exec = require("child_process").exec;
 function getResource(response, user) {
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	response.write("USER : " + user + '\n\n');
+	
 	exec("ls -lah", function (error, stdout, stderr) {
 		response.write(stdout);
 		response.end();
