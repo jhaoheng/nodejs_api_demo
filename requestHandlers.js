@@ -20,14 +20,36 @@ var exec = require("child_process").exec;
 // exports.start = start;
 // exports.upload = upload;
 
+var processResult = function(stdout) {  
+    var lines = stdout.toString().split('\n');
+    var results = [];
+    lines.forEach(function(line, index) {
+        // var parts = line.split('=');
+        results[index] = line;
+    });
+    console.log('first : '+results);
+    return results;
+};
+
 function getResource(response, user) {
-	response.writeHead(200, {"Content-Type": "text/plain"});
-	response.write("USER : " + user + '\n\n');
-	
+	// response.writeHead(200, {"Content-Type": "text/plain"});
+	response.writeHead(200, {"Content-Type": "application/json"});
+	// response.write("USER : " + user + '\n\n');
+	var resourceArray = [];
 	exec("ls -lah", function (error, stdout, stderr) {
-		response.write(stdout);
-		response.end();
+		// response.write(stdout);
+		// response.end();
+		resourceArray = processResult(stdout);
+		var json = JSON.stringify({ 
+		user: user, 
+		resource: resourceArray
+		});
+		response.end(json);
 	});
+	
+	// console.log(resourceArray);
+	// var resourceArray = ["item1", "item2"];
+	// var otherObject = { item1: "item1val", item2: "item2val" };
 }
 
 exports.getResource = getResource;

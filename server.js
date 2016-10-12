@@ -6,11 +6,10 @@ var url = require("url");
 function start(route, handle) {
   function onRequest(request, response) {
   	// console.log('here : ' + JSON.stringify(request.headers.host));
-
+  	var authkey = request.headers.auth;
     var path = url.parse(request.url).path;
-    console.log("Request for " + path + " received.");
 
-    route(handle, path, response);
+    route(handle, path, response, authkey);
   }
 
   http.createServer(onRequest).listen(port);

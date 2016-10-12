@@ -18,3 +18,4 @@ console.log(url.split('/')[1]);
 if (url.split('/')[2] == 'resource') {
 	console.log("yes");
 }
+
