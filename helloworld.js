@@ -19,3 +19,7 @@ if (url.split('/')[2] == 'resource') {
 	console.log("yes");
 }
 
+
+var parsedJSON = require('./config.json');
+console.log(parsedJSON.age);
+// console.log('json : ' + JSON.parse(parsedJSON));

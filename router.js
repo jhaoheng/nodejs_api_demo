@@ -5,7 +5,10 @@ function route(handle, path, response, authkey) {
 
 	// var path = "local.com:1111/{user}/resource";
 	// console.log(path.split('/')[2]);
-	if (path.split('/')[2] == 'resource' && authkey == 'maxhu') {
+	
+	var parsedJSON = require('./config.json');
+	var key = parsedJSON.authkey;
+	if (path.split('/')[2] == 'resource' && authkey == key) {
 		handle(response, path.split('/')[1]);
 	}
 	// if (typeof handle[path] === 'function') {

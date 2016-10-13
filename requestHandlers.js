@@ -24,10 +24,12 @@ var processResult = function(stdout) {
     var lines = stdout.toString().split('\n');
     var results = [];
     lines.forEach(function(line, index) {
-        // var parts = line.split('=');
+        if (!line) {
+        	return results;
+        }
         results[index] = line;
     });
-    console.log('first : '+results);
+    // console.log('first : '+results);
     return results;
 };
 
@@ -36,7 +38,9 @@ function getResource(response, user) {
 	response.writeHead(200, {"Content-Type": "application/json"});
 	// response.write("USER : " + user + '\n\n');
 	var resourceArray = [];
-	exec("ls -lah", function (error, stdout, stderr) {
+
+	var cmd = "/Applications/ejabberd-16.09/bin/ejabberdctl user_resources "+user+" xmpp";
+	exec(cmd, function (error, stdout, stderr) {
 		// response.write(stdout);
 		// response.end();
 		resourceArray = processResult(stdout);
@@ -46,10 +50,11 @@ function getResource(response, user) {
 		});
 		response.end(json);
 	});
-	
+
 	// console.log(resourceArray);
 	// var resourceArray = ["item1", "item2"];
 	// var otherObject = { item1: "item1val", item2: "item2val" };
 }
 
 exports.getResource = getResource;
+

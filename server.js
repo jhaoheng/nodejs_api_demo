@@ -1,4 +1,7 @@
-var port = 1111;
+
+var parsedJSON = require('./config.json');
+// console.log(parsedJSON.port);
+var port = parsedJSON.port;
 
 var http = require("http");
 var url = require("url");
